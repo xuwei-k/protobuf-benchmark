@@ -1,0 +1,18 @@
+language: scala
+sudo: false
+cache:
+  directories:
+  - $HOME/.ivy2/cache
+  - $HOME/.ivy2/launchers
+language: scala
+jdk:
+- oraclejdk8
+- oraclejdk7
+script:
+- sbt -J-Xms512M -J-Xmx512M "jmh:run jmh:run -i 10 -wi 10 -f1 -t1 com.google.protobuf.ProtoBench"
+- find $HOME/.sbt -name "*.lock" | xargs rm
+- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
